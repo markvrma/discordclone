@@ -7,22 +7,16 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-
-# Create your views here.
-# rooms = [
-#     {'id':1,'name':'rock'},
-#     {'id':2,'name':'avant'},
-#     {'id':3,'name':'techno'},
-# ]
+from django.contrib.auth.forms import UserCreationForm
 
 
 def loginPage(request):
-
+    page = 'login'
     if request.user.is_authenticated:
         return redirect('home')
         
     if request.method == "POST":
-        username = request.POST.get("username")
+        username = request.POST.get("username").lower()
         password = request.POST.get("password")
 
         try:
@@ -38,12 +32,29 @@ def loginPage(request):
         else:
             messages.error(request,"Incorrect username or password")
 
-    context = {}
+    context = {'page':page}
     return render(request, "base/login_register.html", context)
 
 def logoutPage(request):
     logout(request)
     return redirect('home')
+
+def registerPage(request):
+    page = 'register'
+    form = UserCreationForm()
+
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.username = user.username.lower()
+            user.save()
+            return redirect('home')
+        else:
+            messages.error(request,'An error occurred, welp')
+    
+    context = {'page':page,'form':form}
+    return render(request,'base/login_register.html',context)
 
 def home(request):
     # search
