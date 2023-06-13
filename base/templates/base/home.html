@@ -3,7 +3,7 @@
 <style>
   .home-container {
     display: grid;
-    grid-template-columns: 1fr 3fr;
+    grid-template-columns: 1fr 3fr 1fr;
   }
 </style>
 
@@ -41,7 +41,21 @@
       <hr />
     </div>
 
-    {% endfor %}
+    {% endfor %}  
+  </div>
+  <div>
+    {% include 'base/activity_component.html' %}
+    {% comment %} <h3>Recent Activity</h3>
+    {% for messages in room_messages %}
+      <div>
+        <small>@{{messages.user}} {{messages.created|timesince}}</small>
+        <small>replied to "{{messages.room}}"</small>
+        <p>{{messages}}</p>
+        {% if request.user==message.user %}
+        <a href="{% url 'delete-message' message.id %}">Delete</a> 
+        {% endif %}
+      </div>
+    {% endfor %} {% endcomment %}
   </div>
 </div>
 
