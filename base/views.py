@@ -1,13 +1,13 @@
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
 from django.db.models import Q
-from .models import Room, Topic, Message
-from .forms import RoomForm
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
+from .models import Room, Topic, Message
+from .forms import RoomForm
 
 
 def loginPage(request):
@@ -100,6 +100,20 @@ def room(request, pk):
         "participants": participants,
     }
     return render(request, "base/room.html", context)
+
+
+def userProfile(request, pk):
+    user = User.objects.get(id=pk)
+    rooms = user.room_set.all()
+    room_messages = user.message_set.all()
+    topics = Topic.objects.all()
+    context = {
+        "user": user,
+        "rooms":rooms,
+        "room_messages":room_messages,
+        "topics":topics,
+    }
+    return render(request, "base/profile.html", context)
 
 
 @login_required(login_url="login")
