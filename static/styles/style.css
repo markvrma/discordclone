@@ -707,9 +707,9 @@ a {
   color: var(--color-light-gray);
   display: flex;
   align-items: center;
-  gap: 1rem;
   font-size: 1.4rem;
   font-weight: 500;
+  gap: 1rem;
 }
 
 .roomListRoom__joined svg {
