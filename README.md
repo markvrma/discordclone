@@ -11,4 +11,4 @@ To run the app locally
 5. Enjoy
 
 TODO
--[ ] Deploy to Heroku
+- [ ] Deploy to Heroku
