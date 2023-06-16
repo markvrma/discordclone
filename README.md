@@ -1,5 +1,5 @@
 # researchMate
-A web app to create zones to discuss topics you would like to discuss.
+A web app to create zones to discuss topics with strangers.
 
 ### Note:
 Requires django to be preinstalled
